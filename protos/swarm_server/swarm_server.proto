@@ -1,11 +1,10 @@
 syntax = "proto3";
 
-package mavsdk.rpc.offboard_server;
+package mavsdk.rpc.swarm_server;
 
 import "mavsdk_options.proto";
-import "offboard/offboard.proto";
 
-service OffboardServerService {
+service SwarmServerService {
     rpc SubscribePositionTargetGlobalSetpoint(SubscribePositionTargetGlobalRequest) returns(stream SubscribePositionTargetGlobalResponse) { option (mavsdk.options.async_type) = ASYNC; }
 }
 
