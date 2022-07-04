@@ -3,7 +3,6 @@ syntax = "proto3";
 package mavsdk.rpc.swarm_controller;
 
 import "mavsdk_options.proto";
-import "mavsdk_common.proto";
 
 option java_package = "io.mavsdk.swarm_controller";
 
@@ -49,7 +48,7 @@ message IsActiveResponse {
 }
 
 message SetPositionGlobalRequest {
-    mavsdk.common.PositionGlobalYaw position_global_yaw = 1; // Position and yaw
+    PositionGlobalYaw position_global_yaw = 1; // Position and yaw
 }
 message SetPositionGlobalResponse {
     bool offboard_result = 1;
@@ -59,3 +58,17 @@ message SetRateRequest {
     float frequency = 1;
 }
 message SetRateResponse {}
+
+message PositionGlobalYaw {
+    // Possible altitude options
+    enum AltitudeType {
+        ALTITUDE_TYPE_REL_HOME = 0; // Altitude relative to the Home position
+        ALTITUDE_TYPE_AMSL = 1; // Altitude above mean sea level (AMSL)
+        ALTITUDE_TYPE_AGL = 2; // Altitude above ground level (AGL)
+    }    
+    double lat_deg = 1; // Latitude (in degrees)
+    double lon_deg = 2; // Longitude (in degrees)
+    float alt_m = 3;    // altitude (in metres)
+    float yaw_deg = 4;  // Yaw in degrees (0 North, positive is clock-wise looking from above)
+    AltitudeType altitude_type = 5; // altitude type for this position 
+}
