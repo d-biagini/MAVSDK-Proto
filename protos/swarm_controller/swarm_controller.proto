@@ -11,13 +11,12 @@ service SwarmControllerService {
     /*
      * Start offboard control.
      */
-    rpc Start(StartRequest) returns(StartResponse) {}
+    rpc Start(StartRequest) returns(StartResponse) { option (mavsdk.options.async_type) = SYNC; }
     /*
      * Stop offboard control.
      *
-     * The vehicle will be put into Hold mode: https://docs.px4.io/en/flight_modes/hold.html
      */
-    rpc Stop(StopRequest) returns(StopResponse) {}
+    rpc Stop(StopRequest) returns(StopResponse) { option (mavsdk.options.async_type) = SYNC; }
     /*
      * Check if offboard control is active.
      *
@@ -25,13 +24,18 @@ service SwarmControllerService {
      * setpoints.
      */
     rpc IsActive(IsActiveRequest) returns(IsActiveResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    rpc SetRate(SetRateRequest) returns(SetRateResponse) { option (mavsdk.options.async_type) = SYNC; }
      /*
      * Set the position in Global coordinates (latitude, longitude, altitude) and yaw
      */
     rpc SetPositionGlobal(SetPositionGlobalRequest) returns(SetPositionGlobalResponse) { option (mavsdk.options.async_type) = SYNC; }
 }
 
-message StartRequest {}
+message StartRequest {
+    float frequency = 1;
+}
+
 message StartResponse {
     bool offboard_result = 1;
 }
@@ -52,3 +56,6 @@ message SetPositionGlobalRequest {
 message SetPositionGlobalResponse {
     bool offboard_result = 1;
 }
+
+message SetRateRequest {}
+message SetRateResponse {}
