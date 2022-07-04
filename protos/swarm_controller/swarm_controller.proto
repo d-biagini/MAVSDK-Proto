@@ -32,9 +32,7 @@ service SwarmControllerService {
     rpc SetPositionGlobal(SetPositionGlobalRequest) returns(SetPositionGlobalResponse) { option (mavsdk.options.async_type) = SYNC; }
 }
 
-message StartRequest {
-    float frequency = 1;
-}
+message StartRequest {}
 
 message StartResponse {
     bool offboard_result = 1;
@@ -57,5 +55,7 @@ message SetPositionGlobalResponse {
     bool offboard_result = 1;
 }
 
-message SetRateRequest {}
+message SetRateRequest {
+    float frequency = 1;
+}
 message SetRateResponse {}
