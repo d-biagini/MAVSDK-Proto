@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+import "mavsdk_options.proto";
+
+package mavsdk.common;
+
+option java_package = "common.mavsdk";
+
+// Type for position commands in Global (Latitude, Longitude, Altitude) coordinates and yaw.
+message PositionGlobalYaw {
+    // Possible altitude options
+    enum AltitudeType {
+        ALTITUDE_TYPE_REL_HOME = 0; // Altitude relative to the Home position
+        ALTITUDE_TYPE_AMSL = 1; // Altitude above mean sea level (AMSL)
+        ALTITUDE_TYPE_AGL = 2; // Altitude above ground level (AGL)
+    }    
+    double lat_deg = 1; // Latitude (in degrees)
+    double lon_deg = 2; // Longitude (in degrees)
+    float alt_m = 3;    // altitude (in metres)
+    float yaw_deg = 4;  // Yaw in degrees (0 North, positive is clock-wise looking from above)
+    AltitudeType altitude_type = 5; // altitude type for this position 
+}

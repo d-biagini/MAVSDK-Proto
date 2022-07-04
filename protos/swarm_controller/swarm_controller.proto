@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package mavsdk.rpc.swarm_controller;
+
+import "mavsdk_options.proto";
+import "mavsdk_common.proto";
+
+option java_package = "io.mavsdk.swarm_controller";
+
+service SwarmControllerService {
+    /*
+     * Start offboard control.
+     */
+    rpc Start(StartRequest) returns(StartResponse) {}
+    /*
+     * Stop offboard control.
+     *
+     * The vehicle will be put into Hold mode: https://docs.px4.io/en/flight_modes/hold.html
+     */
+    rpc Stop(StopRequest) returns(StopResponse) {}
+    /*
+     * Check if offboard control is active.
+     *
+     * True means that the vehicle is in offboard mode and we are actively sending
+     * setpoints.
+     */
+    rpc IsActive(IsActiveRequest) returns(IsActiveResponse) { option (mavsdk.options.async_type) = SYNC; }
+     /*
+     * Set the position in Global coordinates (latitude, longitude, altitude) and yaw
+     */
+    rpc SetPositionGlobal(SetPositionGlobalRequest) returns(SetPositionGlobalResponse) { option (mavsdk.options.async_type) = SYNC; }
+}
+
+message StartRequest {}
+message StartResponse {
+    bool offboard_result = 1;
+}
+
+message StopRequest {}
+message StopResponse {
+    bool offboard_result = 1;
+}
+
+message IsActiveRequest {}
+message IsActiveResponse {
+    bool is_active = 1; // True if swarm controller is active
+}
+
+message SetPositionGlobalRequest {
+    mavsdk.common.PositionGlobalYaw position_global_yaw = 1; // Position and yaw
+}
+message SetPositionGlobalResponse {
+    bool offboard_result = 1;
+}
