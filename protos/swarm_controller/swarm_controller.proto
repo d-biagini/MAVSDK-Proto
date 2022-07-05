@@ -25,6 +25,8 @@ service SwarmControllerService {
     rpc IsActive(IsActiveRequest) returns(IsActiveResponse) { option (mavsdk.options.async_type) = SYNC; }
 
     rpc SetRate(SetRateRequest) returns(SetRateResponse) { option (mavsdk.options.async_type) = SYNC; }
+
+    rpc SetTargetComponentId(SetTargetComponentIdRequest) returns(SetTargetComponentIdResponse) { option (mavsdk.options.async_type) = SYNC; }
      /*
      * Set the position in Global coordinates (latitude, longitude, altitude) and yaw
      */
@@ -58,6 +60,11 @@ message SetRateRequest {
     float frequency = 1;
 }
 message SetRateResponse {}
+
+message SetTargetComponentIdRequest {
+    int32 target_component_id = 1;
+}
+message SetTargetComponentIdResponse {}
 
 message PositionGlobalYaw {
     // Possible altitude options
